@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 
 namespace DataAccess.DbContextFactory
 {
-    public class Tenant2DbContextFactory : IDbContextFactory<Tenant2DbContext>
+    public class Tenant3DbContextFactory : IDbContextFactory<Tenant3DbContext>
     {
-        public Tenant2DbContext CreateDbContext()
+        public Tenant3DbContext CreateDbContext()
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
-            var builder = new DbContextOptionsBuilder<Tenant2DbContext>();
-            var dbNameString = configuration.GetConnectionString("T2");
+            var builder = new DbContextOptionsBuilder<Tenant3DbContext>();
+            var dbNameString = configuration.GetConnectionString("T3");
 
             builder.UseSqlite(dbNameString);
 
-            return new Tenant2DbContext(builder.Options);
+            return new Tenant3DbContext(builder.Options);
         }
     }
 }

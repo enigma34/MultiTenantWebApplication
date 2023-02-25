@@ -22,7 +22,7 @@ namespace BussinssLogic.Features.Students.Handlers.Queries
         public async Task<List<Student>> Handle(GetStudentListRequest request, CancellationToken cancellationToken)
         {
             var students = new List<Student>();
-            students = await _studentRepository.GetStudentsWithDetails(request.TenantId);
+                students = await _studentRepository.GetStudentsWithDetails(request.TenantId);
             return students;
         }
     }

@@ -1,6 +1,6 @@
 ﻿using BussinssLogic.Contracts.persistence;
 using BussinssLogic.Models;
-using DataAccess.Data;
+using DataAccess.DbContexts;
 using DataAccess.DbContextFactory;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -15,50 +15,48 @@ namespace DataAccess.Repo
 {
     public class StudentRepository : IStudentRepository
     {
-        // Tenant1DbContext _dbContext;
-        //public StudentRepository(Tenant1DbContext dbContext)
-        //{
-        //    _dbContext = dbContext;
-        //}
-
-      //  private readonly IDbContextFactory _dbContextFactory;
-
-        //public StudentRepository(IDbContextFactory dbContextFactory)
-        //{
-        //    _dbContextFactory = dbContextFactory;
-        //}
-
         public async Task<List<Student>> GetStudentsWithDetails(string tenantID)
         {
-            //Debug.WriteLine(DBConnectionStatus());
+            List<Student> students = new List<Student>();
             try
             {
-                var factory = new Tenant1DbContextFactory();
-                using var dbcon = factory.CreateDbContext();
-                List<Student> students = await dbcon.students.FromSqlRaw("SELECT * FROM Student").ToListAsync();
+                if (tenantID=="1")
+                {
+                    var factory = new Tenant1DbContextFactory();
+                    using var dbcon = factory.CreateDbContext();
+                    students = await dbcon.students.FromSqlRaw("SELECT * FROM Student").ToListAsync();
+                }
+                else if (tenantID == "2")
+                {
+                    var factory = new Tenant2DbContextFactory();
+                    using var dbcon = factory.CreateDbContext();
+                    students = await dbcon.students.FromSqlRaw("SELECT * FROM Student").ToListAsync();
+                }
+                else if (tenantID == "3")
+                {
+                    var factory = new Tenant3DbContextFactory();
+                    using var dbcon = factory.CreateDbContext();
+                    var studentsT3 = await dbcon.students.FromSqlRaw("SELECT * FROM Student").ToListAsync();
+                    foreach (var tempStudent in studentsT3)
+                    {
+                        students.Add(new Student
+                        {
+                            Id = tempStudent.Id,
+                            Name = tempStudent.FirstName + " " + tempStudent.LastName,
+                            Age = tempStudent.Age,
+                            Email = tempStudent.Email,
+                            Mobile = tempStudent.Mobile,
+                            Address = tempStudent.Address + " " + tempStudent.City,
+                        });
+                    }
+                }
                 return students;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
-                throw;
+                return null;
             }
-
         }
-
-        //private bool DBConnectionStatus()
-        //{
-        //    try
-        //    {
-        //        _dbContext.Database.OpenConnection();
-        //        _dbContext.Database.CloseConnection();
-        //        return true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        var exception = ex;
-        //        return false;
-        //    }
-        //}
     }
 }

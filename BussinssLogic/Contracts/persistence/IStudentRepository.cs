@@ -9,6 +9,6 @@ namespace BussinssLogic.Contracts.persistence
 {
     public interface IStudentRepository
     {
-        Task<List<Student>> GetStudentsWithDetails(string tenantId);
+        Task<List<Student>> GetStudentsWithDetails(string tenantID);
     }
 }

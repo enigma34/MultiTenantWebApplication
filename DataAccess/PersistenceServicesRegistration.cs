@@ -1,5 +1,5 @@
 ﻿using BussinssLogic.Contracts.persistence;
-using DataAccess.Data;
+using DataAccess.DbContexts;
 using DataAccess.DbContextFactory;
 using DataAccess.Repo;
 using Microsoft.EntityFrameworkCore;
@@ -17,11 +17,9 @@ namespace DataAccess
     {
         public static IServiceCollection ConfigurePersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<Tenant1DbContext>(options =>
-            options.UseSqlite(configuration.GetConnectionString("T1")));
-
-            services.AddDbContext<Tenant2DbContext>(options =>
-            options.UseSqlite(configuration.GetConnectionString("T2")));
+            services.AddDbContext<Tenant1DbContext>();
+            services.AddDbContext<Tenant2DbContext>();
+            services.AddDbContext<Tenant3DbContext>();
 
             services.AddScoped<IStudentRepository, StudentRepository>();
             return services;

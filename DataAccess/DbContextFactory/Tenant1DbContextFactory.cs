@@ -1,5 +1,6 @@
-﻿using DataAccess.Data;
+﻿using DataAccess.DbContexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -10,28 +11,12 @@ using System.Threading.Tasks;
 namespace DataAccess.DbContextFactory
 {
     public class Tenant1DbContextFactory : IDbContextFactory<Tenant1DbContext>
-    {
-        //private readonly IConfiguration _configuration;
+    {     
+       //public Tenant1DbContext CreateDbContext()
+       // {
+            
+       // }
 
-        //public Tenant1DbContextFactory()
-        //{
-        //}
-
-        //public Tenant1DbContextFactory(IConfiguration configuration)
-        //{
-        //    _configuration = configuration;
-        //}
-
-
-        //public Tenant1DbContext CreateDbContext()
-        //{
-        //    var connectionString = _configuration.GetConnectionString("T1");
-        //    //return new Tenant1DbContext(connectionString);
-        //    var optionsBuilder = new DbContextOptionsBuilder<Tenant1DbContext>();
-        //    optionsBuilder.UseSqlite(connectionString);
-
-        //    return new Tenant1DbContext(optionsBuilder.Options);
-        //}      
         public Tenant1DbContext CreateDbContext()
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()

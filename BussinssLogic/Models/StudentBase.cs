@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BussinssLogic.Models
 {
-    public class Student : StudentBase
+    public abstract class StudentBase
     {
         public int Id { get; set; }
         public string Name { get; set; }
