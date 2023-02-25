@@ -10,5 +10,6 @@ namespace BussinssLogic.Features.Students.Requests.Queries
 {
     public class GetStudentListRequest: IRequest<List<Student>>
     {
+        public string TenantId { get; set; }
     }
 }

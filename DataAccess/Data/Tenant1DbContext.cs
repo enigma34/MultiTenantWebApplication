@@ -10,14 +10,29 @@ namespace DataAccess.Data
 {
     public class Tenant1DbContext : DbContext
     {
-        public Tenant1DbContext(DbContextOptions options) : base(options)
+        //private string connectionString;
+
+        public Tenant1DbContext(DbContextOptions<Tenant1DbContext> options) : base(options)
         {
             
         }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //public Tenant1DbContext(string connectionString)
         //{
-        //    modelBuilder.ApplyConfigurationsFromAssembly(typeof(Tenant1DbContext).Assembly);
+        //    this.connectionString = connectionString;
+        //}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(Tenant1DbContext).Assembly);
+        }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        optionsBuilder.UseSqlite("T1");
+        //    }
         //}
         public DbSet<Student> students { get; set; } =null!;
     }

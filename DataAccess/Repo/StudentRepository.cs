@@ -1,7 +1,9 @@
 ﻿using BussinssLogic.Contracts.persistence;
 using BussinssLogic.Models;
 using DataAccess.Data;
+using DataAccess.DbContextFactory;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,17 +15,27 @@ namespace DataAccess.Repo
 {
     public class StudentRepository : IStudentRepository
     {
-        Tenant1DbContext _dbContext;
-        public StudentRepository(Tenant1DbContext dbContext)
+        // Tenant1DbContext _dbContext;
+        //public StudentRepository(Tenant1DbContext dbContext)
+        //{
+        //    _dbContext = dbContext;
+        //}
+
+      //  private readonly IDbContextFactory _dbContextFactory;
+
+        //public StudentRepository(IDbContextFactory dbContextFactory)
+        //{
+        //    _dbContextFactory = dbContextFactory;
+        //}
+
+        public async Task<List<Student>> GetStudentsWithDetails(string tenantID)
         {
-            _dbContext = dbContext;
-        }
-        public async Task<List<Student>> GetStudentsWithDetails()
-        {
-            Debug.WriteLine(DBConnectionStatus());
+            //Debug.WriteLine(DBConnectionStatus());
             try
             {
-                List<Student> students = await _dbContext.students.FromSqlRaw("SELECT * FROM Student").ToListAsync();
+                var factory = new Tenant1DbContextFactory();
+                using var dbcon = factory.CreateDbContext();
+                List<Student> students = await dbcon.students.FromSqlRaw("SELECT * FROM Student").ToListAsync();
                 return students;
             }
             catch (Exception ex)
@@ -34,19 +46,19 @@ namespace DataAccess.Repo
 
         }
 
-        private bool DBConnectionStatus()
-        {
-            try
-            {
-                _dbContext.Database.OpenConnection();
-                _dbContext.Database.CloseConnection();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                var exception = ex;
-                return false;
-            }
-        }
+        //private bool DBConnectionStatus()
+        //{
+        //    try
+        //    {
+        //        _dbContext.Database.OpenConnection();
+        //        _dbContext.Database.CloseConnection();
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var exception = ex;
+        //        return false;
+        //    }
+        //}
     }
 }

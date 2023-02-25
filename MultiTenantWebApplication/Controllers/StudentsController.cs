@@ -18,9 +18,9 @@ namespace MultiTenantWebApplication.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Student>>> Get()
+        public async Task<ActionResult<List<Student>>> Get([FromQuery]string tenantId)
         {
-            var students = await _mediator.Send(new GetStudentListRequest());
+            var students = await _mediator.Send(new GetStudentListRequest() { TenantId=tenantId});
             return Ok(students);
         }
     }
