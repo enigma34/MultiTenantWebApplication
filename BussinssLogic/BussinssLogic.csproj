@@ -10,5 +10,10 @@
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Features\SubjectEnrollments\Handlers\Queries\" />
+	  <Folder Include="Features\SubjectEnrollments\Requests\Queries\" />
+	</ItemGroup>
 	
 </Project>

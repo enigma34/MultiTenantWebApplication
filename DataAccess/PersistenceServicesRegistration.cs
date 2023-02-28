@@ -17,11 +17,12 @@ namespace DataAccess
     {
         public static IServiceCollection ConfigurePersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<Tenant1DbContext>();
-            services.AddDbContext<Tenant2DbContext>();
-            services.AddDbContext<Tenant3DbContext>();
+            services.AddDbContext<Tenant1DbContext>(options =>options.UseSqlite(configuration.GetConnectionString("T1")));
+            services.AddDbContext<Tenant2DbContext>(options => options.UseSqlite(configuration.GetConnectionString("T2")));
+            services.AddDbContext<Tenant3DbContext>(options => options.UseSqlite(configuration.GetConnectionString("T3")));
 
             services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<ISubjectEnrollmentRepository, SubjectEnrollmentRepository>();
             return services;
         }
     }

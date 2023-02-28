@@ -12,12 +12,13 @@ namespace DataAccess.DbContexts
     public class Tenant3DbContext : DbContext
     {
 
-        public Tenant3DbContext(DbContextOptions options) : base(options){}
+        public Tenant3DbContext(DbContextOptions<Tenant3DbContext> options) : base(options){}
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(Tenant2DbContext).Assembly);
-        }
-        public DbSet<StudentT3> students { get; set; } =null!;
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.ApplyConfigurationsFromAssembly(typeof(Tenant2DbContext).Assembly);
+        //}
+        public DbSet<StudentT3> StudentT3 { get; set; } =null!;
+        public DbSet<SubjectEnrollment> subjectEnrollments { get; set; }
     }
 }

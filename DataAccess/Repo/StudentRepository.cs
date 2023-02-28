@@ -24,19 +24,19 @@ namespace DataAccess.Repo
                 {
                     var factory = new Tenant1DbContextFactory();
                     using var dbcon = factory.CreateDbContext();
-                    students = await dbcon.students.FromSqlRaw("SELECT * FROM Student").ToListAsync();
+                    students = await dbcon.Student.FromSqlRaw("SELECT * FROM Student").ToListAsync();
                 }
                 else if (tenantID == "2")
                 {
                     var factory = new Tenant2DbContextFactory();
                     using var dbcon = factory.CreateDbContext();
-                    students = await dbcon.students.FromSqlRaw("SELECT * FROM Student").ToListAsync();
+                    students = await dbcon.Student.FromSqlRaw("SELECT * FROM Student").ToListAsync();
                 }
                 else if (tenantID == "3")
                 {
                     var factory = new Tenant3DbContextFactory();
                     using var dbcon = factory.CreateDbContext();
-                    var studentsT3 = await dbcon.students.FromSqlRaw("SELECT * FROM Student").ToListAsync();
+                    var studentsT3 = await dbcon.StudentT3.FromSqlRaw("SELECT * FROM Student").ToListAsync();
                     foreach (var tempStudent in studentsT3)
                     {
                         students.Add(new Student
@@ -44,7 +44,6 @@ namespace DataAccess.Repo
                             Id = tempStudent.Id,
                             Name = tempStudent.FirstName + " " + tempStudent.LastName,
                             Age = tempStudent.Age,
-                            Email = tempStudent.Email,
                             Mobile = tempStudent.Mobile,
                             Address = tempStudent.Address + " " + tempStudent.City,
                         });
